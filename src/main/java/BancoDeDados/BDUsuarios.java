@@ -15,12 +15,12 @@ public class BDUsuarios {
 		return bdU.size();
 	}
 
-	public void atualizaUsuario(Usuario a) {
-		bdU.replace(a.getNome(), a);
+	public void atualizaUsuario(String nome, Usuario a) {
+		bdU.replace(nome, a);
 	}
 
-	public boolean usuarioExiste(Usuario u) {
-		if(bdU.containsKey(u.getNome())){
+	public boolean usuarioExiste(String nome) {
+		if(bdU.containsKey(nome)){
 			return true;
 		}
 		else return false;

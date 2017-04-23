@@ -16,11 +16,12 @@ public class InterfaceBiblioteca {
 	}
 
 
-	public boolean fazerEmprestimo(Usuario a, Livro l, int prazo) {
-		if(bdU.getStatusUsuario(a.getNome())=="ok"){
-			a.emprestaLivro(l,prazo);
-			bdU.atualizaUsuario(a);
-			bdL.atualizaLivro(l.getNcatalogo(), a, prazo);
+	public boolean fazerEmprestimo(String nome, int codLivro, int prazo) {
+		if(bdU.getStatusUsuario(nome)=="ok"){
+			Usuario a = new Usuario(nome);
+			a.emprestaLivro(codLivro,prazo);
+			bdU.atualizaUsuario(nome, a);
+			bdL.atualizaLivro(codLivro, a, prazo);
 			return true;
 		} else return false;
 	}
@@ -41,8 +42,8 @@ public class InterfaceBiblioteca {
 	}
 
 
-	public boolean usuarioExistenteNoSistema(Usuario u) {
-		return bdU.usuarioExiste(u);
+	public boolean usuarioExistenteNoSistema(String nome) {
+		return bdU.usuarioExiste(nome);
 	}
 
 
@@ -51,18 +52,27 @@ public class InterfaceBiblioteca {
 	}
 
 
-	public void bloquearUsuario(Usuario b, int i) {
-		b.bloquear(i);
+	public void bloquearUsuario(String nome, int i) {
+		Usuario u = new Usuario(nome);
+		u.bloquear(i);
+		bdU.atualizaUsuario(nome, u);
 	}
 
 
-	public String VerificaStatusDeUsuario(Usuario b) {
-		if(bdU.usuarioExiste(b)){
-			Usuario u = bdU.getUsuario(b.getNome());
-			if(u.getStatus()=="bloqueado")
-				return "bloqueado por "+u.getDias_Bloqueio()+" dias";
-			else return u.getStatus();
+	public String VerificaStatusDeUsuario(String nome) {
+		if(bdU.usuarioExiste(nome)){
+			if(bdU.getUsuario(nome).getStatus()=="bloqueado")
+				return "bloqueado por "+bdU.getUsuario(nome).getDias_Bloqueio()+" dias";
+			else return bdU.getUsuario(nome).getStatus();
 		}else return "Usuário não existe";
+	}
+
+
+	public void devolverLivro(int cod) {
+		Usuario u = bdL.getUsuarioQuePegouLivroEmprestado(cod);
+		bdL.atualizaLivro(cod, null, 0);
+		u.devolveLivro(bdL.getLivro(cod));
+		bdU.atualizaUsuario(u.getNome(), u);
 	}
 
 }

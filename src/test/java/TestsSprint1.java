@@ -24,7 +24,7 @@ public class TestsSprint1 {
 		a = new Usuario("Alyson");
 		b = new Usuario("Jéssica");
 		c = new Usuario("Matos");
-		l = mock(Livro.class);
+		l = new Livro("Machado de Assis", "Dom Casmurro");
 	}
 
 	@Test
@@ -41,35 +41,35 @@ public class TestsSprint1 {
 	public void testAdicionarUsuarioInterface() {
 		sistema = new InterfaceBiblioteca(bdU, bdL);
 		sistema.adicionarUsuarioNoSistema(a);
-		assertTrue(sistema.usuarioExistenteNoSistema(a));
+		assertTrue(sistema.usuarioExistenteNoSistema("Alyson"));
 		sistema.adicionarUsuarioNoSistema(b);
-		assertTrue(sistema.usuarioExistenteNoSistema(b));
+		assertTrue(sistema.usuarioExistenteNoSistema("Jéssica"));
 		sistema.adicionarUsuarioNoSistema(c);
-		assertTrue(sistema.usuarioExistenteNoSistema(c));
+		assertTrue(sistema.usuarioExistenteNoSistema("Matos"));
 	}
 	
 	@Test
 	public void testUsuarioEmprestaLivros() {
 		testAdicionarUsuarioInterface();
 		sistema.adicionaLivroNoSistema(l);
-		assertTrue(sistema.fazerEmprestimo(a, l, 10));
+		assertTrue(sistema.fazerEmprestimo("Alyson", 0, 10));
 	}
 
 	@Test
 	public void testRemoverUsuarioDoSistema() {
 		testUsuarioEmprestaLivros();
 		sistema.removerUsuario(b);
-		assertFalse(sistema.fazerEmprestimo(b, l, 10));
+		assertFalse(sistema.fazerEmprestimo("Jéssica", 0, 10));
 	}
 	
 	@Test
 	public void testBloqueioTemporarioDeUsuario() {
 		testUsuarioEmprestaLivros();
-		sistema.bloquearUsuario(b,5);
-		assertFalse(sistema.fazerEmprestimo(b, l, 10));
-		assertEquals("bloqueado por 5 dias",sistema.VerificaStatusDeUsuario(b));
-		sistema.bloquearUsuario(c,10);
-		assertEquals("bloqueado por 10 dias",sistema.VerificaStatusDeUsuario(c));
+		sistema.bloquearUsuario("Jéssica",5);
+		assertFalse(sistema.fazerEmprestimo("Jéssica", 0, 10));
+		assertEquals("bloqueado por 5 dias",sistema.VerificaStatusDeUsuario("Jéssica"));
+		sistema.bloquearUsuario("Matos",10);
+		assertEquals("bloqueado por 10 dias",sistema.VerificaStatusDeUsuario("Matos"));
 	}
 	
 }

@@ -27,17 +27,19 @@ public class Livro {
 		return status;
 	}
 	
-	public String getUsuario() {
-		return usuario.getNome();
+	public Usuario getUsuario() {
+		return usuario;
 	}
 	
 	public int getNcatalogo() {
 		return Ncatalogo;
 	}
 
-	public void empresta(Usuario u, int prazo) {
+	public void atualiza(Usuario u, int prazo) {
 		usuario = u;
-		status = "emprestado";
+		if(prazo==0){
+			status="livre";
+		}else status = "emprestado";
 		this.setPrazo(prazo);
 	}
 

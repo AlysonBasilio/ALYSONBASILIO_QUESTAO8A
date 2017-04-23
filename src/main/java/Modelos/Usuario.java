@@ -4,13 +4,13 @@ import java.util.HashMap;
 
 public class Usuario {
 	private String nome;
-	private HashMap<Livro, Integer> LivrosEmprestados; 
+	private HashMap<Integer, Integer> LivrosEmprestados; 
 	private String status;
 	private int dias_bloqueado;
 
 	public Usuario(String string) {
 		nome = string;
-		LivrosEmprestados = new HashMap<Livro,Integer>();
+		LivrosEmprestados = new HashMap<Integer, Integer>();
 		status = "ok";
 	}
 
@@ -22,8 +22,8 @@ public class Usuario {
 		return status;
 	}
 	
-	public void emprestaLivro(Livro l, int prazo) {
-		LivrosEmprestados.put(l, prazo);
+	public void emprestaLivro(int codLivro, int prazo) {
+		LivrosEmprestados.put(codLivro,prazo);
 	}
 
 	public void bloquear(int i) {
@@ -34,6 +34,10 @@ public class Usuario {
 	public int getDias_Bloqueio(){
 		if(status == "bloqueado") return dias_bloqueado;
 		else return 0;
+	}
+
+	public void devolveLivro(Livro l) {
+		LivrosEmprestados.remove(l);
 	}
 	
 }

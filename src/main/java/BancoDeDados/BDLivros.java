@@ -16,7 +16,7 @@ public class BDLivros {
 	
 	public void atualizaLivro(int codigo, Usuario u, int prazo) {
 		Livro l = bdL.get(codigo);
-		l.empresta(u,prazo);
+		l.atualiza(u,prazo);
 		bdL.replace(codigo, l);
 	}
 
@@ -26,5 +26,9 @@ public class BDLivros {
 
 	public Livro getLivro(int codLivro) {
 		return bdL.get(codLivro);
+	}
+
+	public Usuario getUsuarioQuePegouLivroEmprestado(int cod2) {
+		return bdL.get(cod2).getUsuario();
 	}
 }
