@@ -18,7 +18,7 @@ public class InterfaceBiblioteca {
 
 	public boolean fazerEmprestimo(String nome, int codLivro, int prazo) {
 		if(bdU.getStatusUsuario(nome)=="ok"){
-			Usuario a = new Usuario(nome);
+			Usuario a = bdU.getUsuario(nome);
 			a.emprestaLivro(codLivro,prazo);
 			bdU.atualizaUsuario(nome, a);
 			bdL.atualizaLivro(codLivro, a, prazo);
@@ -53,7 +53,7 @@ public class InterfaceBiblioteca {
 
 
 	public void bloquearUsuario(String nome, int i) {
-		Usuario u = new Usuario(nome);
+		Usuario u = bdU.getUsuario(nome);
 		u.bloquear(i);
 		bdU.atualizaUsuario(nome, u);
 	}
