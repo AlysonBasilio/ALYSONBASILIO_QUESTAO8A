@@ -1,6 +1,7 @@
 package Modelos;
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class Usuario {
 	private String nome;
@@ -38,6 +39,16 @@ public class Usuario {
 
 	public void devolveLivro(Livro l) {
 		LivrosEmprestados.remove(l);
+	}
+
+	public String getLivrosStatus() {
+		Set<Integer> SetI = LivrosEmprestados.keySet();
+		String text = "";
+		for(int i : SetI){
+			text += "Código: "+i+" | "+LivrosEmprestados.get(i)+" dias\n";
+		}
+		if(text=="") text+="O Usuario não pegou livros emprestados";
+		return text;
 	}
 	
 }

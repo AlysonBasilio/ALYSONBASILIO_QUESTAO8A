@@ -2,7 +2,6 @@ package Interface;
 
 import BancoDeDados.BDLivros;
 import BancoDeDados.BDUsuarios;
-import Modelos.Livro;
 import Modelos.Usuario;
 
 public class InterfaceUsuario {
@@ -24,7 +23,10 @@ public class InterfaceUsuario {
 			statusUser = true;
 			user = bdU.getUsuario(nome);
 		}
-		else statusUser = false;
+		else {
+			statusUser = false;
+			user = bdU.getUsuario(nome);
+		}
 		return statusUser;
 	}
 
@@ -34,6 +36,19 @@ public class InterfaceUsuario {
 			return bdL.acharLivro(nome_livro_autor);
 		}
 		return "Usuario está com pendência e não pode realizar consultas";
+	}
+
+
+	public String livrosQueRetirei() {
+		return user.getLivrosStatus();
+	}
+
+
+	public String getStatusUsuario() {
+		if(statusUser) return "Usuario nao tem pendencias";
+		else{
+			return "O usuario esta bloqueado por "+user.getDias_Bloqueio()+" dias";
+		}
 	}
 
 }
