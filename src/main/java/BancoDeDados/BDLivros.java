@@ -1,6 +1,7 @@
 package BancoDeDados;
 
 import java.util.HashMap;
+import java.util.Set;
 
 import Modelos.Livro;
 import Modelos.Usuario;
@@ -30,5 +31,16 @@ public class BDLivros {
 
 	public Usuario getUsuarioQuePegouLivroEmprestado(int cod2) {
 		return bdL.get(cod2).getUsuario();
+	}
+
+	public String acharLivro(String nome_livro_autor) {
+		Livro l;
+		Set<Integer> SetI = bdL.keySet();
+		for(int i : SetI){
+			l = bdL.get(i);
+			if(l.getAutor() == nome_livro_autor) return l.getStatus();
+			if(l.getTitulo() == nome_livro_autor) return l.getStatus();
+		}
+		return "Livro não encontrado";
 	}
 }
